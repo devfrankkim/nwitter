@@ -5,12 +5,14 @@ import { authService } from "../firebaseService";
 function App() {
   const [inIt, setInIt] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
+    // ======== listening for sign in status ========
     authService.onAuthStateChanged((user) => {
-      // ======== listening for sign in status ========
       if (user) {
         setIsLoggedIn(true);
+        setUserObj(user);
       } else {
         setIsLoggedIn(false);
       }
@@ -22,7 +24,11 @@ function App() {
   return (
     <>
       <div>
-        {inIt ? <AppRouter isLoggedIn={isLoggedIn} /> : "initializing.. "}
+        {inIt ? (
+          <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+        ) : (
+          "initializing.. "
+        )}
       </div>
     </>
   );
