@@ -9,18 +9,21 @@ import Home from "../routes/Home";
 import Profile from "../routes/Profile";
 import Navigation from "./Navigation";
 
-function AppRouter({ isLoggedIn, userObj }) {
+function AppRouter({ isLoggedIn, userOwner, refreshUserOwner }) {
   return (
     <Router>
-      {isLoggedIn && <Navigation />}
+      {isLoggedIn && <Navigation userOwner={userOwner} />}
       <Switch>
         {isLoggedIn ? (
           <>
             <Route exact path="/">
-              <Home userObj={userObj} />
+              <Home userOwner={userOwner} />
             </Route>
             <Route exact path="/profile">
-              <Profile />
+              <Profile
+                userOwner={userOwner}
+                refreshUserOwner={refreshUserOwner}
+              />
             </Route>
             <Redirect from="*" to="/" />
           </>
