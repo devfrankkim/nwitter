@@ -8,12 +8,13 @@ function Tweet({ tweetObject, userOwner }) {
   const [isEditing, setIsEditing] = useState(false);
   const [tweetValue, setTweetValue] = useState(tweetObject.text);
 
-  console.log("URL---->", tweetObject.attachmentUrl);
-
+  // ======= Delete data  =======
   const deleteTweet = async () => {
     const ok = window.confirm("Are you sure you want to delete?");
     if (ok) {
+      // *** delete tweet ***
       await deleteDoc(doc(dbService, "CRUD", tweetObject.id));
+      // *** delete profile URL ***
       await deleteObject(ref(storageService, tweetObject.attachmentUrl));
     }
   };
@@ -25,6 +26,7 @@ function Tweet({ tweetObject, userOwner }) {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    // ======= Update data  =======
     await setDoc(doc(dbService, "CRUD", tweetObject.id), {
       createID: userOwner.uid,
       createdAt: serverTimestamp(),
