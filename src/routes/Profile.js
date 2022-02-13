@@ -47,18 +47,29 @@ function Profile({ userOwner, refreshUserOwner }) {
     }
   };
   return (
-    <>
-      <form action="" onSubmit={onSubmit}>
+    <div className="container">
+      <form action="" onSubmit={onSubmit} className="profileForm">
         <input
           type="text"
-          placeholder="Display name"
+          placeholder="Change your profile name."
+          autoFocus
           onChange={onChange}
-          value={newDisplayName}
+          // value={`${newDisplayName}`}
+          className="formInput"
         />
-        <input type="submit" value="Update profile" />
-        <button onClick={logOut}>Log Out</button>
+        <input
+          type="submit"
+          value="Update Profile"
+          className="formBtn"
+          style={{
+            marginTop: 10,
+          }}
+        />
+        <span onClick={logOut} className="formBtn cancelBtn logOut">
+          Log Out
+        </span>
       </form>
-    </>
+    </div>
   );
 }
 

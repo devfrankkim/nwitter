@@ -18,7 +18,6 @@ function App() {
         setIsLoggedIn(false);
         setUserOwner(null);
       }
-
       setInIt(true);
     });
   }, []);

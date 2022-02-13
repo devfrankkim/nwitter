@@ -8,6 +8,8 @@ import {
   uploadString,
   getDownloadURL,
 } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function TweetForm({ userOwner }) {
   const [tweetValue, setTweetValue] = useState("");
@@ -16,6 +18,8 @@ function TweetForm({ userOwner }) {
   const fileInput = useRef();
 
   const onSubmit = async (event) => {
+    if (tweetValue === "") return;
+
     event.preventDefault();
 
     // ======== Adding profile picture to "Firebase Storage" only when available. ========
@@ -75,27 +79,47 @@ function TweetForm({ userOwner }) {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        value={tweetValue}
-        onChange={onChange}
-        type="text"
-        placeholder="What's on your mind?"
-        maxLength={120}
-      />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={onFileChange}
-        ref={fileInput}
-      />
-      <input type="submit" value="Click" />
-      {profilePicture && (
-        <div>
-          <img src={profilePicture} width="80px" height="80px" alt="" />
-          <button onClick={onClearProfile}>Clear Picture</button>
-        </div>
-      )}
+    <form onSubmit={onSubmit} className="factoryForm">
+      <div className="factoryInput__container">
+        <input
+          value={tweetValue}
+          onChange={onChange}
+          type="text"
+          placeholder="What's on your mind?"
+          maxLength={120}
+          className="factoryInput__input"
+        />
+        <label htmlFor="attach-file" className="factoryInput__label">
+          <span>Add photos</span>
+          <FontAwesomeIcon icon={faPlus} />
+        </label>
+        <input
+          id="attach-file"
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+          ref={fileInput}
+          style={{
+            opacity: 0,
+          }}
+        />
+        <input type="submit" value="Post" className="factoryInput__arrow" />
+        {profilePicture && (
+          <div className="factoryForm__attachment">
+            <img
+              src={profilePicture}
+              alt=""
+              style={{
+                backgroundImage: profilePicture,
+              }}
+            />
+            <button onClick={onClearProfile} className="factoryForm__clear">
+              <span>Remove</span>
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          </div>
+        )}
+      </div>
     </form>
   );
 }

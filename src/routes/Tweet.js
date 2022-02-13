@@ -3,6 +3,8 @@ import { dbService } from "../firebaseService";
 import { doc, deleteDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { storageService } from "../firebaseService";
 import { deleteObject, ref } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 function Tweet({ tweetObject, userOwner }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -45,18 +47,23 @@ function Tweet({ tweetObject, userOwner }) {
   };
 
   return (
-    <div>
+    <div className="nweet">
       {isEditing ? (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="container nweetEdit">
             <input
               value={tweetValue}
               onChange={onChange}
               placeholder="Edit..."
+              required
+              autoFocus
+              className="formInput"
             />
-            <input type="submit" value="Update" />
+            <input type="submit" value="Update" className="formBtn" />
           </form>
-          <button onClick={toggleEdit}> Cancel </button>
+          <button onClick={toggleEdit} className="formBtn cancelBtn">
+            Cancel
+          </button>
         </>
       ) : (
         <>
@@ -70,9 +77,14 @@ function Tweet({ tweetObject, userOwner }) {
             />
           )}
           {userOwner.uid === tweetObject.createID && (
-            <div>
-              <button onClick={deleteTweet}>Delete</button>
-              <button onClick={toggleEdit}>Edit</button>
+            <div className="nweet__actions">
+              <button onClick={deleteTweet}>
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+              <button onClick={toggleEdit}>
+                {" "}
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </button>
             </div>
           )}
         </>

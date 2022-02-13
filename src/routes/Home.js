@@ -26,9 +26,9 @@ function Home({ userOwner }) {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <TweetForm userOwner={userOwner} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {database.map((value) => (
           <Tweet tweetObject={value} userOwner={userOwner} key={value.id} />
         ))}
